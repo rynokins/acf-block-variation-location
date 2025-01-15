@@ -1,15 +1,19 @@
 {
-    "name": "davidwebca/acf-block-style-location",
+    "name": "rynokins/acf-block-variation-location",
     "type": "wordpress-plugin",
-    "description": "WordPress and ACF plugin to allow a Field Group Location for every block style registered.",
-    "keywords": ["wordpress", "plugin", "editor", "gutenberg"],
-    "homepage": "https://github.com/davidwebca/acf-block-style-location",
+    "description": "WordPress / ACF plugin to allow a Field Group Location for every ACF block variation registered.",
+    "keywords": ["wordpress", "plugin", "editor", "gutenberg", "acf", "block", "variation", "location"],
+    "homepage": "https://github.com/rynokins/acf-block-variation-location",
     "license": "MIT",
     "authors": [
         {
             "name": "David Lapointe Gilbert",
             "email": "info@davidweb.ca",
             "homepage": "https://davidweb.ca"
+        },
+        {
+            "name": "Ryan Edwards",
+            "homepage": "https://github.com/rynokins"
         }
     ],
     "require": {

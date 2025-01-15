@@ -1,16 +1,10 @@
-# ACF Block Style Location
+# ACF Block Variation Location
 
-:bangbang: | WARNING! This plugin is probably unstable since it fiddles<br> its way around to find React instances in the page.
-:---: | :---
+Hey, welcome! For those of you who want to use the [Block Variations API](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-variations/) with your custom [ACF Blocks](https://www.advancedcustomfields.com/resources/acf_register_block_type/), you can use this to register ACF Field Groups for each of your block variations!
 
-Now that you've been warned: Hey, welcome! For those of you who use [block styles](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-styles/) and [ACF Blocks](https://www.advancedcustomfields.com/resources/acf_register_block_type/), you probably wonder why it's not possible to register a group field for a specific block style.
+This solution is built using the work [@davidwebca](https://github.com/davidwebca) did for [ACF Block Style Location](https://github.com/davidwebca/acf-block-style-location). It adds a new Field Group Location type called "ACF Block Variation" (in a new group called "Block Variations"), parses the ACF Blocks you have registered, and build a list of Block Variations you can choose from to assign to your Field Group.
 
-The simple reason is probably because it's unreliable right now in the current Gutenberg APIs (2021-12-20), but it might change soon. In the meantime, I've hacked around this solution that 1) caches the block styles as a transient; 2) finds the ACF form React instance in the dom; 3) forces the refresh of the ACF form when we click a block style.
-
-This is far from perfect, but if it can be of any use to someone, good!
-
-
-## Requirements
+## Optioal Requirements
 
 - [Composer](https://getcomposer.org/download/)
 
@@ -19,32 +13,53 @@ This is far from perfect, but if it can be of any use to someone, good!
 Install via Composer:
 
 ```bash
-composer require davidwebca/acf-block-style-location
+composer require rynokins/acf-block-variation-location
 ```
 
 Or simply download zip of this repo and place in your plugins directory!
 
 ## Setup
 
-You'll need to first visit a Gutenberg-enabled page to prune the block styles cache. This is simply because WordPress doesn't allow fetching Block Styles on non-gutenberg pages (yet) since they can still be registered from the JavaScript API only. ACF adheres to that and only activates its block functionalities on Gutenberg-enabled pages.
+This plugin will parse all of your custom ACF blocks and register a field group location for each block variation you define. Using the [block.json](https://www.advancedcustomfields.com/resources/acf-block-configuration-via-block-json/) setup for registration, you can define your variations like so:
 
-Once you've done that, you can go back to the admin and fill in your Field Groups with the block location and then the block style location. Only the block style location should work though since all the block styles are namespaced.
-
-The value to pass, for those who use PHP or ACF Builder to register their fields, is as follows:
-
-```php
-$acfBuilder->setLocation('acf_block_style', '==', 'acf/blockname:stylename');
+```json
+{
+    "$schema": "https://advancedcustomfields.com/schemas/json/main/block.json",
+    "name": "acf/card-item",
+    "title": "Card Item",
+    "description": "Single Card Item",
+    "category": "custom-layout-category",
+    "icon": "columns",
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "card-item.php"
+    },
+    "variations": [
+        {
+            "name": "card-item-default",
+            "title": "Card Item",
+            "description": "Single Card Item.",
+            "isDefault": true,
+            "isActive": ["className"],
+            "scope": ["inserter"],
+            "attributes": {
+                "className": "is-card-item"
+            }
+        },
+        {
+            "name": "card-item-alt",
+            "title": "Alt Card Item",
+            "description": "Single Alt Card Item.",
+            "isActive": ["className"],
+            "scope": ["inserter"],
+            "attributes": {
+                "className": "is-card-item-alt"
+            }
+        }
+    ]
+}
 ```
-
-Example:
-```php
-$acfBuilder->setLocation('acf_block_style', '==', 'acf/postlist:default'); /* Block style class is "is-style-default" */
-```
-
-Also possible to negate:
-```php
-$acfBuilder->setLocation('acf_block_style', '!=', 'acf/postlist:default'); /* Block style class is "is-style-default" */
-```
+The above block variations would show in your ACF Location Rules, using the `className` as the identifier for matching the rule to your variation. If you are going to use a different `isActive` attribute, you may need to fiddle around with the match rules to get it to work.
 
 ## Bug Reports and contributions
 
