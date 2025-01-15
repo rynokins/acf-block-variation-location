@@ -4,13 +4,9 @@ Hey, welcome! For those of you who want to use the [Block Variations API](https:
 
 This solution is built using the work [@davidwebca](https://github.com/davidwebca) did for [ACF Block Style Location](https://github.com/davidwebca/acf-block-style-location). It adds a new Field Group Location type called "ACF Block Variation" (in a new group called "Block Variations"), parses the ACF Blocks you have registered, and build a list of Block Variations you can choose from to assign to your Field Group.
 
-## Optioal Requirements
-
-- [Composer](https://getcomposer.org/download/)
-
 ## Installation
 
-Install via Composer:
+Install via [Composer](https://getcomposer.org/download/):
 
 ```bash
 composer require rynokins/acf-block-variation-location
@@ -59,7 +55,9 @@ This plugin will parse all of your custom ACF blocks and register a field group 
     ]
 }
 ```
-The above block variations would show in your ACF Location Rules, using the `className` as the identifier for matching the rule to your variation. If you are going to use a different `isActive` attribute, you may need to fiddle around with the match rules to get it to work.
+The above block variations [Card Item, Card Item Alt] would show in your ACF Location Rules, using the `className` as the identifier for matching the rule to your variation. If you are going to use a different `isActive` attribute, you may need to fiddle around with the match rules to get it to work.
+
+---
 
 ## Bug Reports and contributions
 
